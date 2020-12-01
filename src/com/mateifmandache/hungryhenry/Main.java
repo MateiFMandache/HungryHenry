@@ -12,8 +12,6 @@ public class Main {
         controller.start();
         Dimension windowSize = new Dimension(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         window.setPreferredSize(windowSize);
-        window.setMinimumSize(windowSize);
-        window.setMaximumSize(windowSize);
         window.pack();
         window.setVisible(true);
     }

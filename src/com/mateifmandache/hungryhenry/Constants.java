@@ -9,4 +9,5 @@ public final class Constants {
     public static final int WINDOW_HEIGHT = 560;
     // LEVEL_WIDTH * SQUARE_SIZE = 24 * 32 = 768
     public static final int WINDOW_WIDTH = 768;
+    public static final String FONT = "FreeSans";
 }
