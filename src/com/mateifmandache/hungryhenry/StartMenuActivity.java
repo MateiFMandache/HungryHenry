@@ -37,6 +37,7 @@ public class StartMenuActivity implements Activity {
 
         MyButton playButton = new MyButton("Play");
         setUpButton.accept(playButton);
+        playButton.addActionListener(e -> controller.invoke(new LevelsetCommand("test")));
 
         MyButton exitButton = new MyButton("Exit");
         setUpButton.accept(exitButton);
