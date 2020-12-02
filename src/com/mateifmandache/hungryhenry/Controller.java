@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
-    private final JFrame window;
+    private final JLayeredPane window;
+    private final JFrame frame;
     private List<Activity> activityStack = new ArrayList<>();
 
     private Activity popActivity() {
@@ -21,8 +22,9 @@ public class Controller {
         activityStack.add(a);
     }
 
-    public Controller(JFrame window) {
+    public Controller(JLayeredPane window, JFrame frame) {
         this.window = window;
+        this.frame = frame;
     }
     public void start() {
         Activity firstActivity = new StartMenuActivity(window, this);
@@ -32,14 +34,26 @@ public class Controller {
     }
     public void invoke(Command command) {
         switch (command.type) {
-            case EXIT_GAME:
-                exit();
+            case EXIT_GAME -> exit();
+            case START_LEVELSET -> startLevelset(command);
+            case START_LEVEL -> startLevel(command);
         }
     }
     private void exit() {
         while (activityStack.size() > 0) {
             popActivity().exit();
         }
-        window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+    }
+    private void startLevelset(Command command) {
+        Activity playLevelsetActivity =
+                new PlayLevelsetActivity(((LevelsetCommand) command).getName(),this);
+        addActivity(playLevelsetActivity);
+        playLevelsetActivity.enter();
+    }
+    private void startLevel(Command command) {
+        Activity levelActivity = new LevelActivity(window, this);
+        addActivity(levelActivity);
+        levelActivity.enter();
     }
 }

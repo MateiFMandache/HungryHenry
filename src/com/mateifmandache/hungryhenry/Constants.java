@@ -1,6 +1,6 @@
 package com.mateifmandache.hungryhenry;
 
-public final class Constants {
+public class Constants {
     public static final int SQUARE_SIZE = 32;
     public static final int LEVEL_HEIGHT = 16;
     public static final int LEVEL_WIDTH = 24;

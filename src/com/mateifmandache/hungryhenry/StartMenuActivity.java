@@ -5,11 +5,11 @@ import java.awt.*;
 import java.util.function.Consumer;
 
 public class StartMenuActivity implements Activity {
-    private final JFrame window;
+    private final JLayeredPane window;
     private JPanel pane;
     private final Controller controller;
 
-    public StartMenuActivity(JFrame window, Controller controller) {
+    public StartMenuActivity(JLayeredPane window, Controller controller) {
         this.window = window;
         this.controller = controller;
     }
@@ -17,7 +17,7 @@ public class StartMenuActivity implements Activity {
     @Override
     public void enter() {
         pane = new JPanel();
-        window.add(pane, BorderLayout.CENTER);
+        pane.setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         pane.setBackground(Colors.BACKGROUND);
 
         Consumer<MyButton> setUpButton = button -> {
@@ -25,7 +25,6 @@ public class StartMenuActivity implements Activity {
             button.setThickness(6);
             button.setForeground(Colors.DARK);
             button.setContentAreaFilled(false);
-            button.setBackground(new Color(0, 0, 0, 0));
             button.setFont(new Font(Constants.FONT, Font.PLAIN, 36));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
         };
@@ -44,6 +43,7 @@ public class StartMenuActivity implements Activity {
         exitButton.addActionListener(e -> controller.invoke(new Command(CommandType.EXIT_GAME)));
 
         pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+        pane.setPreferredSize(new Dimension(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT));
         pane.add(Box.createVerticalGlue());
         pane.add(title);
         pane.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -51,6 +51,7 @@ public class StartMenuActivity implements Activity {
         pane.add(Box.createRigidArea(new Dimension(0, 5)));
         pane.add(exitButton);
         pane.add(Box.createVerticalGlue());
+        window.add(pane, Integer.valueOf(ZIndices.StartMenuActivity));
     }
 
     @Override

@@ -6,13 +6,16 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame window = new JFrame("Hungry Henry");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Controller controller = new Controller(window);
+        // set up a layered pane inside the root frame
+        JFrame frame = new JFrame("Hungry Henry");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLayeredPane window = new JLayeredPane();
+        window.setPreferredSize(new Dimension(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT));
+        frame.add(window, BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+
+        Controller controller = new Controller(window, frame);
         controller.start();
-        Dimension windowSize = new Dimension(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        window.setPreferredSize(windowSize);
-        window.pack();
-        window.setVisible(true);
     }
 }

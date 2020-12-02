@@ -21,9 +21,9 @@ public class Level {
         }
     }
     public Level(JSONObject data) {
-        hunger = (int) data.get("hunger");
+        hunger = (int) (long) data.get("hunger");
         timed = (boolean) data.get("timed");
-        time = (int) data.get("time");
+        time = (int) (long) data.get("time");
         objects = new String[Constants.LEVEL_HEIGHT][Constants.LEVEL_WIDTH];
         JSONArray array = (JSONArray) data.get("objects");
         for (int i = 0; i < Constants.LEVEL_HEIGHT; i++) {
