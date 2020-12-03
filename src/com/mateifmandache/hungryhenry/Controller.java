@@ -52,7 +52,8 @@ public class Controller {
         playLevelsetActivity.enter();
     }
     private void startLevel(Command command) {
-        Activity levelActivity = new LevelActivity(window, this);
+        Activity levelActivity = new LevelActivity(window, this,
+                                                    ((StartLevelCommand) command).getLevel());
         addActivity(levelActivity);
         levelActivity.enter();
     }

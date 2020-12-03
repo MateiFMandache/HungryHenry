@@ -10,4 +10,6 @@ public class Constants {
     // LEVEL_WIDTH * SQUARE_SIZE = 24 * 32 = 768
     public static final int WINDOW_WIDTH = 768;
     public static final String FONT = "FreeSans";
+    public static final double VELOCITY_MULTIPLIER = 0.8;
+    public static final int MILLISECONDS_PER_FRAME = 17;
 }

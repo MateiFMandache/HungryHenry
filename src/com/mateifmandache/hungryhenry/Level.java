@@ -65,10 +65,10 @@ public class Level {
     public int getTime() {
         return time;
     }
-    public void setObject(int x, int y, String object) {
-        objects[y][x] = object;
+    public void setObject(int row, int column, String object) {
+        objects[row][column] = object;
     }
-    public String getObject(int x, int y) {
-        return objects[y][x];
+    public String getObject(int row, int column) {
+        return objects[row][column];
     }
 }
