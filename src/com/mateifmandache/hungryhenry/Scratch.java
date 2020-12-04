@@ -2,6 +2,7 @@ package com.mateifmandache.hungryhenry;
 
 public class Scratch {
     public static void main(String[] args) {
-        System.out.println((int) 2.8);
+        int[] nums = {1, 2, 3};
+        System.out.println(nums[3]);
     }
 }

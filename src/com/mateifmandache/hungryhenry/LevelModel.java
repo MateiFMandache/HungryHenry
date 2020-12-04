@@ -22,6 +22,9 @@ public class LevelModel {
                 switch (typeCode) {
                     case StringCodes.HENRY:
                         henry = new Henry(row, column);
+                        break;
+                    case StringCodes.WALL:
+                        wall.addWall(row, column);
                 }
             }
         }
@@ -31,6 +34,7 @@ public class LevelModel {
     }
     public List<Item> getItems() {
         List<Item> items = new ArrayList<>();
+        items.addAll(wall.getItems());
         if (henry != null) {
             items.add(henry.toItem());
         }

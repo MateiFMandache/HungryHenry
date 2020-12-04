@@ -1,7 +1,6 @@
 package com.mateifmandache.hungryhenry;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.TimerTask;
 
 public class LevelActivity implements Activity {
@@ -11,6 +10,7 @@ public class LevelActivity implements Activity {
     private LevelModel levelModel;
     private JPanel pane;
     private LevelView view;
+    private long lastFrameTime;
     public LevelActivity(JLayeredPane window, Controller controller, Level level) {
         this.window = window;
         this.controller = controller;
@@ -28,6 +28,7 @@ public class LevelActivity implements Activity {
         (new java.util.Timer()).schedule(new TimerTask() {
             @Override
             public void run() {
+                lastFrameTime = System.currentTimeMillis();
                 update();
             }
         }, Constants.MILLISECONDS_PER_FRAME);
@@ -39,9 +40,11 @@ public class LevelActivity implements Activity {
         (new java.util.Timer()).schedule(new TimerTask() {
             @Override
             public void run() {
+                lastFrameTime = System.currentTimeMillis();
                 update();
             }
-        }, Constants.MILLISECONDS_PER_FRAME);
+        }, Math.max(Constants.MILLISECONDS_PER_FRAME
+                    + lastFrameTime - System.currentTimeMillis(), 0));
     }
 
     @Override

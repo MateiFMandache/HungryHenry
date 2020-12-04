@@ -7,6 +7,7 @@ public class Henry extends Character {
         super(row, column);
         keyPressListener = new KeyPressListener();
     }
+
     @Override
     protected void updateVelocity() {
         double horizontalDirection = keyPressListener.getHorizontalDirection();
@@ -18,6 +19,11 @@ public class Henry extends Character {
         }
         velocity = new Velocity(horizontalDirection * speed,
                                 verticalDirection * speed);
+    }
+
+    @Override
+    protected BounceType getBounceType() {
+        return BounceType.STOP;
     }
 
     @Override

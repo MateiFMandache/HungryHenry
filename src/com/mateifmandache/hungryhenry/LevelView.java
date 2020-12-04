@@ -3,6 +3,7 @@ package com.mateifmandache.hungryhenry;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -84,6 +85,7 @@ public class LevelView {
 
         @Override
         public void paintComponent(Graphics g) {
+            Toolkit.getDefaultToolkit().sync();
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -96,6 +98,13 @@ public class LevelView {
                                 item.getX(), item.getY(),
                                 2*item.getRadius(), 2*item.getRadius());
                         g2.fill(circle);
+                        break;
+                    case StringCodes.WALL:
+                        g2.setColor(Colors.LEVEL_WALL);
+                        Rectangle2D.Double rect = new Rectangle2D.Double(
+                                item.getX(), item.getY(),
+                                2*item.getRadius(), 2*item.getRadius());
+                        g2.fill(rect);
                 }
             }
         }
