@@ -26,8 +26,7 @@ public class LevelView {
 
         levelPanel = new LevelPanel(levelModel.getItems());
         levelPanel.setBackground(Colors.LEVEL_BACKGROUND);
-        levelPanel.setPreferredSize(new Dimension(Constants.WINDOW_WIDTH,
-                                    Constants.LEVEL_HEIGHT * Constants.SQUARE_SIZE));
+        levelPanel.setPreferredSize(new Dimension(Constants.WINDOW_WIDTH, Constants.PLAY_AREA_HEIGHT));
 
         infoBar.setLayout(new BoxLayout(infoBar, BoxLayout.LINE_AXIS));
 
@@ -70,10 +69,14 @@ public class LevelView {
         hungerLabel.setText(String.format("Hunger: %d", levelModel.getHunger()));
         timeLabel.setText(String.format("Time: %d", levelModel.getTime()));
         levelPanel.setItems(levelModel.getItems());
+        levelPanel.setCountDown(levelModel.getCountDown());
+        levelPanel.setCountDownString(levelModel.getCountDownTime());
         levelPanel.repaint();
     }
     private static class LevelPanel extends JPanel {
         private java.util.List<Item> items;
+        private boolean countDown;
+        private String countDownString;
         public LevelPanel(java.util.List<Item> items) {
             super();
             this.items = items;
@@ -81,6 +84,20 @@ public class LevelView {
 
         public void setItems(List<Item> items) {
             this.items = items;
+        }
+
+        public void setCountDown(boolean countDown) {
+            this.countDown = countDown;
+        }
+
+        public void setCountDownString(String countDownString) {
+            this.countDownString = countDownString;
+        }
+
+        private void paintBaddy(Graphics2D g2, double x, double y, double radius, Color color) {
+            g2.setColor(color);
+            Ellipse2D.Double circle = new Ellipse2D.Double(x, y,2*radius, 2*radius);
+            g2.fill(circle);
         }
 
         @Override
@@ -105,7 +122,18 @@ public class LevelView {
                                 item.getX(), item.getY(),
                                 2*item.getRadius(), 2*item.getRadius());
                         g2.fill(rect);
+                        break;
+                    case StringCodes.BADDY4:
+                        paintBaddy(g2, item.getX(), item.getY(), item.getRadius(), Color.GREEN);
                 }
+            }
+            if (countDown) {
+                g2.setColor(Colors.LIGHT);
+                g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                g2.setFont(new Font(Constants.FONT, Font.PLAIN, 72));
+                g2.drawString(countDownString, Constants.WINDOW_WIDTH / 2 - 24, // fudge factors
+                                                Constants.PLAY_AREA_HEIGHT / 2 + 18);
             }
         }
     }

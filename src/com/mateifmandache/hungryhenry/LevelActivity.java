@@ -20,11 +20,15 @@ public class LevelActivity implements Activity {
     public void enter() {
         pane = new JPanel();
         pane.setBounds(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+
         levelModel = new LevelModel();
         levelModel.load(level);
+
         view = new LevelView(pane, controller);
         view.setup(levelModel);
+
         window.add(pane, Integer.valueOf(ZIndices.LevelActivity));
+
         (new java.util.Timer()).schedule(new TimerTask() {
             @Override
             public void run() {

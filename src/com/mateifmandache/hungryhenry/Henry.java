@@ -27,8 +27,12 @@ public class Henry extends Character {
     }
 
     @Override
-    protected double getRadius() {
+    public double getRadius() {
         return 16.0;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     @Override

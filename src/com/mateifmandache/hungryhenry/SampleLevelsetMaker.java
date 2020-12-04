@@ -14,6 +14,7 @@ public class SampleLevelsetMaker {
         level1.setObject(1, 1, StringCodes.HENRY + StringCodes.NO_DIRECTION);
         level1.setObject(3, 1, StringCodes.WALL + StringCodes.NO_DIRECTION);
         level1.setObject(1, 3, StringCodes.WALL + StringCodes.NO_DIRECTION);
+        level1.setObject(3, 3, StringCodes.BADDY4 + StringCodes.NO_DIRECTION);
         JSONArray levelset = new JSONArray();
         levelset.add(level1.toJSON());
         File file = new File("./res/test.json");
