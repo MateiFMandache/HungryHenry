@@ -17,7 +17,12 @@ public class Baddy4 extends Baddy {
             double displacementX = henryPosition.getX() - position.getX();
             double displacementY = henryPosition.getY() - position.getY();
             double distance = Math.sqrt(Math.pow(displacementX, 2) + Math.pow(displacementY, 2));
-            velocity = new Velocity(displacementX / distance, displacementY / distance);
+            try {
+                velocity = new Velocity(displacementX / distance, displacementY / distance);
+            } catch (ArithmeticException e) {
+                // deal with distance = 0, division by zero error
+                velocity = new Velocity(0, 0);
+            }
         } else {
             velocity = new Velocity(0, 0);
         }

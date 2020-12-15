@@ -32,6 +32,14 @@ public class Position {
         return new Position(column* Constants.SQUARE_SIZE + xInCell,
                             row * Constants.SQUARE_SIZE + yInCell);
     }
+    public double distanceTo(Position position) {
+        return Math.sqrt(Math.pow(x - position.getX(), 2)
+                        + Math.pow(y - position.getY(), 2));
+    }
+    public Position apply(RelativePosition relativePosition) {
+        return new Position(x + relativePosition.getX(),
+                            y + relativePosition.getY());
+    }
     public int getRow() {
         return (int) (y / Constants.SQUARE_SIZE);
     }

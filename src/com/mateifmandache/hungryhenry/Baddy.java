@@ -10,9 +10,6 @@ public abstract class Baddy extends Character {
         this.henry = henry;
     }
     public boolean catches() {
-        Position henryPosition = henry.getPosition();
-        return Math.sqrt(Math.pow(henryPosition.getX() - position.getX(), 2)
-                        + Math.pow(henryPosition.getY() - position.getY(), 2))
-                < henry.getRadius() + getRadius();
+        return position.distanceTo(henry.getPosition()) < henry.getRadius() + getRadius();
     }
 }

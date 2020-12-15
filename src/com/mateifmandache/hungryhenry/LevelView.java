@@ -1,10 +1,16 @@
 package com.mateifmandache.hungryhenry;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class LevelView {
@@ -77,9 +83,25 @@ public class LevelView {
         private java.util.List<Item> items;
         private boolean countDown;
         private String countDownString;
+        private Map<String, BufferedImage> foodImages = new HashMap<>();
+
         public LevelPanel(java.util.List<Item> items) {
             super();
             this.items = items;
+            loadFoodImages();
+        }
+
+        private void loadFoodImages() {
+            for (Map.Entry<String, String> foodName : FoodDictionaries.names.entrySet()) {
+                BufferedImage foodImage = null;
+                try {
+                    foodImage = ImageIO.read(new File(
+                            "./res/images/pngs/" + foodName.getValue() + ".png"));
+                } catch (IOException e) {
+                    System.out.println("Failed to load image: " + foodName.getValue());
+                }
+                foodImages.put(foodName.getKey(), foodImage);
+            }
         }
 
         public void setItems(List<Item> items) {
@@ -108,7 +130,8 @@ public class LevelView {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
             for (Item item : items) {
-                switch (item.getType()) {
+                String itemType = item.getType();
+                switch (itemType) {
                     case StringCodes.HENRY:
                         g2.setColor(Colors.LIGHT);
                         Ellipse2D.Double circle = new Ellipse2D.Double(
@@ -125,6 +148,21 @@ public class LevelView {
                         break;
                     case StringCodes.BADDY4:
                         paintBaddy(g2, item.getX(), item.getY(), item.getRadius(), Color.GREEN);
+                        break;
+                    case StringCodes.FOOD1:
+                    case StringCodes.FOOD2:
+                    case StringCodes.FOOD3:
+                    case StringCodes.FOOD4:
+                    case StringCodes.FOOD5:
+                    case StringCodes.FOOD6:
+                    case StringCodes.FOOD7:
+                    case StringCodes.FOOD8:
+                    case StringCodes.FOOD9:
+                        g2.drawImage(foodImages.get(itemType),
+                                    (int) Math.round(item.getX()),
+                                    (int) Math.round(item.getY()),
+                                    null);
+                        break;
                 }
             }
             if (countDown) {

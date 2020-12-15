@@ -10,6 +10,7 @@ public class LevelModel {
     private Wall wall;
     private Henry henry = null;
     private List<Baddy> baddies;
+    private List<Food> foods;
     private LevelState levelState;
     private double countDownTime;
     public void load(Level data) {
@@ -18,6 +19,7 @@ public class LevelModel {
         hunger = data.getHunger();
         wall = new Wall();
         baddies = new ArrayList<>();
+        foods = new ArrayList<>();
         for (int row = 0; row < Constants.LEVEL_HEIGHT; row++) {
             for (int column = 0; column < Constants.LEVEL_WIDTH; column++) {
                 String objectString = data.getObject(row, column);
@@ -32,6 +34,17 @@ public class LevelModel {
                         break;
                     case StringCodes.BADDY4:
                         baddies.add(new Baddy4(row, column));
+                        break;
+                    case StringCodes.FOOD1:
+                    case StringCodes.FOOD2:
+                    case StringCodes.FOOD3:
+                    case StringCodes.FOOD4:
+                    case StringCodes.FOOD5:
+                    case StringCodes.FOOD6:
+                    case StringCodes.FOOD7:
+                    case StringCodes.FOOD8:
+                    case StringCodes.FOOD9:
+                        foods.add(FoodFactory.createFood(row, column, typeCode));
                 }
             }
         }
@@ -54,7 +67,23 @@ public class LevelModel {
                 henry.move(wall);
                 for (Baddy baddy : baddies) {
                     baddy.move(wall);
+                    if (baddy.catches()) {
+
+                    }
                 }
+                List<Food> eatenFoods = new ArrayList<>();
+                for (Food food : foods) {
+                    if (food.catches(henry)) {
+                        eatenFoods.add(food);
+                    }
+                }
+                for (Food food : eatenFoods) {
+                    hunger -= food.getNutrition();
+                    foods.remove(food);
+                }
+                // don't allow hunger to go below 0
+                hunger = Math.max(hunger, 0);
+
                 if (timed) {
                     time -= (double) Constants.MILLISECONDS_PER_FRAME
                             / (double) Constants.MILLISECONDS;
@@ -65,11 +94,14 @@ public class LevelModel {
     public List<Item> getItems() {
         List<Item> items = new ArrayList<>();
         items.addAll(wall.getItems());
-        if (henry != null) {
-            items.add(henry.toItem());
+        for (Food food : foods) {
+            items.add(food.toItem());
         }
         for (Baddy baddy : baddies) {
             items.add(baddy.toItem());
+        }
+        if (henry != null) {
+            items.add(henry.toItem());
         }
         return items;
     }

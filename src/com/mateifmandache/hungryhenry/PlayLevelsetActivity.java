@@ -23,7 +23,7 @@ public class PlayLevelsetActivity implements Activity {
     @Override
     public void enter() {
         try {
-            File levelsetFile = new File("./res/" + levelsetName + ".json");
+            File levelsetFile = new File("./res/levelsets/" + levelsetName + ".json");
             Scanner scanner = new Scanner(levelsetFile);
             JSONParser parser = new JSONParser();
             levelset = (JSONArray) parser.parse(scanner.nextLine());

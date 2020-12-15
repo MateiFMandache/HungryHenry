@@ -15,9 +15,12 @@ public class SampleLevelsetMaker {
         level1.setObject(3, 1, StringCodes.WALL + StringCodes.NO_DIRECTION);
         level1.setObject(1, 3, StringCodes.WALL + StringCodes.NO_DIRECTION);
         level1.setObject(3, 3, StringCodes.BADDY4 + StringCodes.NO_DIRECTION);
+        level1.setObject(4, 1, StringCodes.FOOD1 + StringCodes.NO_DIRECTION);
+        level1.setObject(5, 1, StringCodes.FOOD2 + StringCodes.NO_DIRECTION);
+        level1.setHunger(4);
         JSONArray levelset = new JSONArray();
         levelset.add(level1.toJSON());
-        File file = new File("./res/test.json");
+        File file = new File("./res/levelsets/test.json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(levelset.toString());

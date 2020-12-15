@@ -1,5 +1,7 @@
 package com.mateifmandache.hungryhenry;
 
+import java.util.HashMap;
+
 public class Constants {
     public static final int MILLISECONDS = 1000;
     public static final int SQUARE_SIZE = 32;
